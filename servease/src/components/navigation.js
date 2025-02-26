@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SmallLogo } from "/logo";
+import { SmallLogo } from "../components/logo";
 import LoginScreen from "../screens/login";
 import SignUpScreen from "../screens/signUp";
 import MainMenu from "../screens/mainMenu";

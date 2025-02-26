@@ -1,69 +1,52 @@
-import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
   Text,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import CustomAlert from "../components/warning";
 import { BigLogo } from "../components/logo";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/FBconfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import CustomAlert from "../Components/Notifications";
 
-const SignUpScreen = ({ navigation }) => {
-  // const [name, setName] = useState("");
-  // const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [accountTyoe, setAccountType] = useState("");
+const LoginScreen = ({ navigation }) => {
+  const [Username, setUsername] = useState("");
+  const [Password, setPassword] = useState("");
   const [alert, setAlert] = useState({ message: "", type: "", visible: false });
-  const [passwordError, setPasswordError] = useState("");
 
-  const handleSignUp = () => {
+  const handleLogin = () => {
     Keyboard.dismiss();
 
-    if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters long");
-      console.log("Password must be at least 6 characters long");
-      return;
-    }
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+    signInWithEmailAndPassword(auth, Username, Password)
+      .then((userCredental) => {
+        const user = userCredental.user;
         setAlert({
-          message: "Account created successfully",
+          message: "Login successful",
           type: "success",
           visible: true,
         });
+
         setTimeout(() => {
           navigation.navigate("MainMenu");
-          console.log("User created: ", user);
+          console.log("User logged in: ", user);
         }, 2000);
       })
-      .catch((error) => {
+
+      .catch( (error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        if (errorCode === "auth/email-already-in-use") {
-          setAlert({
-            message: "Email already in use",
-            type: "error",
-            visible: true,
-          });
-        } else {
-          setAlert({
-            message: "Error creating account",
-            type: "error",
-            visible: true,
-          });
-        }
+        setAlert({
+          message: "Invalid credentials",
+          type: "error",
+          visible: true,
+        });
         console.log("Error: ", errorCode, errorMessage);
       });
   };
@@ -83,47 +66,34 @@ const SignUpScreen = ({ navigation }) => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
             <BigLogo />
-            <Text style={styles.title}>Sign Up</Text>
-            {/* <TextInput
-              style={styles.input}
-              placeholder="Name"
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              keyboardAppearance="dark"
-              value={name}
-              onChangeText={setName}
-            />
+            <Text style={styles.title}>Login</Text>
             <TextInput
               style={styles.input}
               placeholder="Username"
               placeholderTextColor="rgba(255, 255, 255, 0.3)"
               keyboardAppearance="dark"
-              value={lastname}
-              onChangeText={setLastName}
-            /> */}
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              keyboardAppearance="dark"
-              value={email}
-              onChangeText={setEmail}
+              value={Username}
+              onChangeText={setUsername}
             />
-            {passwordError ? (
-              <Text style={styles.errorText}>{passwordError}</Text>
-            ) : null}
             <TextInput
               style={styles.input}
               placeholder="Password"
               placeholderTextColor="rgba(255, 255, 255, 0.3)"
               keyboardAppearance="dark"
               secureTextEntry
-              value={password}
+              value={Password}
               onChangeText={setPassword}
             />
 
-            <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
-              <Text style={styles.loginButtonText}>Create account</Text>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+              <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
+            <View style={styles.signUpContainer}>
+              <Text style={styles.signUpText}>Don't you have an account?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                <Text style={styles.signUpLink}> Sign Up</Text>
+              </TouchableOpacity>
+            </View>
 
             <StatusBar style="light"></StatusBar>
           </View>
@@ -163,9 +133,17 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 24,
   },
-  errorText: {
-    color: "#FF0000",
-    marginBottom: 10,
+  signUpContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 27,
+  },
+  signUpText: {
+    color: "#fff",
+  },
+  signUpLink: {
+    color: "#597EAA",
+    fontWeight: 700,
   },
   loginButton: {
     backgroundColor: "#597EAA",
@@ -189,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default LoginScreen;

@@ -3,7 +3,7 @@ import { Image, StyleSheet } from "react-native";
 const BigLogo = () => {
   return (
     <Image
-      source={require("../../assets/Servease-Logo.png")}
+      source={require("../../assets/Servease-Logo.jpg")}
       style={styles.bigLogo}
     ></Image>
   );
@@ -12,7 +12,7 @@ const BigLogo = () => {
 const SmallLogo = () => {
   return (
     <Image
-      source={require("../../assets/Servease-Logo.png")}
+      source={require("../../assets/Servease-Logo.jpg")}
       style={styles.smallLogo}
     ></Image>
   );
