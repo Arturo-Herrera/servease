@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SmallLogo } from "../components/logo";
 import LoginScreen from "../screens/login";
-import SignUpScreen from "../screens/signUp";
+import {UserDataScreen, PersonDataScreen} from "../screens/signUp";
 import MainMenu from "../screens/mainMenu";
 import Categories from "../screens/categories";
 import MyListings from "../screens/myListings";
@@ -23,8 +23,13 @@ const Navigation = () => {
           />
           <Stack.Screen
             options={{ headerShown: false }}
-            name="SignUp"
-            component={SignUpScreen}
+            name="PersonData"
+            component={PersonDataScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="UserData"
+            component={UserDataScreen}
           />
           <Stack.Screen
             name="MainMenu"

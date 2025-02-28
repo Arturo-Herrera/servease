@@ -17,17 +17,21 @@ import { auth } from "../config/FBconfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import CustomAlert from "../components/warning";
 
-const SignUpScreen = ({ navigation }) => {
-  // const [name, setName] = useState("");
-  // const [lastname, setLastName] = useState("");
+const UserDataScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [accountTyoe, setAccountType] = useState("");
-  const [alert, setAlert] = useState({ message: "", type: "", visible: false });
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [alert, setAlert] = useState({ message: "", type: "", visible: false });
 
-  const handleSignUp = () => {
+  const handleUserData = () => {
     Keyboard.dismiss();
+
+    if (!email || !password || !confirmPassword) {
+      setPasswordError("All fields are required");
+      console.log("All fields are required");
+      return;
+    }
 
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters long");
@@ -35,18 +39,17 @@ const SignUpScreen = ({ navigation }) => {
       return;
     }
 
+    if (confirmPassword != password || password != confirmPassword) {
+      setPasswordError("Passwords don't match");
+      console.log("Passwords don't match");
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        setAlert({
-          message: "Account created successfully",
-          type: "success",
-          visible: true,
-        });
-        setTimeout(() => {
-          navigation.navigate("MainMenu");
-          console.log("User created: ", user);
-        }, 2000);
+        navigation.navigate("PersonData")
+        console.log("User created: ", user)
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -80,11 +83,81 @@ const SignUpScreen = ({ navigation }) => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
+        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+        <View style={styles.inner}>
+          <BigLogo />
+          <Text style={styles.title}>User data</Text>
+          {passwordError ? (
+            <Text style={styles.errorText}>{passwordError}</Text>
+          ) : null}
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="rgba(255, 255, 255, 0.3)"
+            keyboardAppearance="dark"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="rgba(255, 255, 255, 0.3)"
+            keyboardAppearance="dark"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm password"
+            placeholderTextColor={"rgba(255,255,255, 0.3)"}
+            keyboardAppearance="dark"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => handleUserData()}
+          >
+            <Text style={styles.loginButtonText}>Next</Text>
+          </TouchableOpacity>
+
+          <StatusBar style="light"></StatusBar>
+        </View>
+        {/* </TouchableWithoutFeedback> */}
+      </KeyboardAvoidingView>
+      <CustomAlert
+        message={alert.message}
+        type={alert.type}
+        visible={alert.visible}
+        onHide={hideAlert}
+      />
+    </>
+  );
+};
+
+const PersonDataScreen = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [alert, setAlert] = useState({ message: "", type: "", visible: false });
+
+  handlePersonData = () => { 
+
+  }
+  return (
+    <>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+      >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
             <BigLogo />
-            <Text style={styles.title}>Sign Up</Text>
-            {/* <TextInput
+            <Text style={styles.title}>Personal information</Text>
+            <TextInput
               style={styles.input}
               placeholder="Name"
               placeholderTextColor="rgba(255, 255, 255, 0.3)"
@@ -94,47 +167,30 @@ const SignUpScreen = ({ navigation }) => {
             />
             <TextInput
               style={styles.input}
-              placeholder="Username"
+              placeholder="Lastname"
               placeholderTextColor="rgba(255, 255, 255, 0.3)"
               keyboardAppearance="dark"
               value={lastname}
               onChangeText={setLastName}
-            /> */}
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              keyboardAppearance="dark"
-              value={email}
-              onChangeText={setEmail}
-            />
-            {passwordError ? (
-              <Text style={styles.errorText}>{passwordError}</Text>
-            ) : null}
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              keyboardAppearance="dark"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
             />
 
-            <TouchableOpacity style={styles.loginButton} onPress={handleSignUp}>
-              <Text style={styles.loginButtonText}>Create account</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Phone number"
+              placeholderTextColor="rgba(255, 255, 255, 0.3)"
+              keyboardAppearance="dark"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+            />
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => handleSignUp()}
+            >
+              <Text style={styles.loginButtonText}>Create Account</Text>
             </TouchableOpacity>
-
-            <StatusBar style="light"></StatusBar>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <CustomAlert
-        message={alert.message}
-        type={alert.type}
-        visible={alert.visible}
-        onHide={hideAlert}
-      />
     </>
   );
 };
@@ -189,4 +245,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export { UserDataScreen, PersonDataScreen };
