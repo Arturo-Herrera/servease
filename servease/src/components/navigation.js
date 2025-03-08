@@ -2,12 +2,13 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { SmallLogo } from "../components/logo";
 import LoginScreen from "../screens/login";
-import {UserDataScreen, PersonDataScreen} from "../screens/signUp";
+import { UserDataScreen, PersonDataScreen } from "../screens/signUp";
 import MainMenu from "../screens/mainMenu";
 import Categories from "../screens/categories";
 import MyListings from "../screens/myListings";
+import Profile from "../screens/profile";
+import ResetPassword from "../screens/resetPassword";
 
 const Stack = createStackNavigator();
 
@@ -17,7 +18,10 @@ const Navigation = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{  
+              headerShown: false,
+              gestureEnabled:  false
+            }}
             name="Login"
             component={LoginScreen}
           />
@@ -34,42 +38,19 @@ const Navigation = () => {
           <Stack.Screen
             name="MainMenu"
             component={MainMenu}
-            options={{
-              headerLeft: () => <SmallLogo />,
-              headerStyle: {
-                backgroundColor: "#222831",
-                borderBottomWidth: 0,
-                shadowOpacity: 0,
-                elevation: 0,
-              },
-              headerTitle: "",
-              headerLeftContainerStyle: {
-                top: 20,
-                left: -5,
-              },
-              gestureEnabled: false,
-              headerRight: () => (
-                <Text
-                  style={{
-                    top: 20,
-                    right: 15,
-                    color: "#fff",
-                  }}
-                >
-                  Profile
-                </Text>
-              ),
-            }}
-          ></Stack.Screen>
+            options={{ headerShown: false, gestureEnabled: false }}
+          />
           <Stack.Screen
             name="Categories"
             component={Categories}
             options={{
               presentation: "modal",
-              headerTitle: "",
+              headerTitle: "Categories",
+              headerTintColor: '#fff',
               headerStyle: {
                 backgroundColor: "#222831",
               },
+              headerLeft: false
             }}
           ></Stack.Screen>
           <Stack.Screen
@@ -77,6 +58,27 @@ const Navigation = () => {
             name="MyListings"
             component={MyListings}
           ></Stack.Screen>
+          <Stack.Screen
+            options={{
+              headerTitle: 'Profile',
+              headerTintColor: "#597EAA",
+              headerBackTitle: '',
+              headerStyle: {
+                backgroundColor: "#222831",
+              },
+
+            }}
+            name="Profile"
+            component={Profile}
+          />
+
+          <Stack.Screen 
+            name="ResetPassword"
+            component={ResetPassword}
+            options={{
+              headerShown: false
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

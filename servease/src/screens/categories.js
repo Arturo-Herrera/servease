@@ -3,7 +3,7 @@ import { View, Text, StyleSheet} from 'react-native'
 const Categories = () => {
     return (
         <View style={styles.container}>
-            <Text style={{color: '#fff'}}>Categories</Text>
+            <Text style={{color: '#fff'}}></Text>
         </View>
     )
 }

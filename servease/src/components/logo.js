@@ -26,6 +26,8 @@ const styles = StyleSheet.create({
   smallLogo: {
     width: 170,
     height: 100,
+    left: -35,
+    top: -10
   },
 });
 

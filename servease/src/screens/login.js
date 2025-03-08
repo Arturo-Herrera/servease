@@ -15,12 +15,23 @@ import CustomAlert from "../components/warning";
 import { BigLogo } from "../components/logo";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/FBconfig";
+import LocationPermission from "../components/getLocation";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = ({ navigation }) => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [alert, setAlert] = useState({ message: "", type: "", visible: false });
+  const [userLocation, setUserLocation] = useState(null);
 
+  const handleLocationObtained = (loc) => {
+    console.log("Ubicación en LoginScreen:", loc);
+    if (loc && loc.coords) {
+      setUserLocation(loc);
+    } else {
+      console.log("Error: Ubicación no válida recibida en LoginScreen");
+    }
+  };
   const handleLogin = () => {
     Keyboard.dismiss();
 
@@ -36,10 +47,11 @@ const LoginScreen = ({ navigation }) => {
         setTimeout(() => {
           navigation.navigate("MainMenu");
           console.log("User logged in: ", user);
+          console.log(userLocation);
         }, 2000);
       })
 
-      .catch( (error) => {
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setAlert({
@@ -57,54 +69,71 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <>
-      <StatusBar style="light" />
+      <SafeAreaView style={styles.container}>
+        <StatusBar style="light" />
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.inner}>
-            <BigLogo />
-            <Text style={styles.title}>Login</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Username"
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              keyboardAppearance="dark"
-              value={Username}
-              onChangeText={setUsername}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor="rgba(255, 255, 255, 0.3)"
-              keyboardAppearance="dark"
-              secureTextEntry
-              value={Password}
-              onChangeText={setPassword}
-            />
+        <LocationPermission onLocationObtained={handleLocationObtained} />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.inner}>
+              <BigLogo />
+              <Text style={styles.title}>Login</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Username"
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                keyboardAppearance="dark"
+                value={Username}
+                onChangeText={setUsername}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="rgba(255, 255, 255, 0.3)"
+                keyboardAppearance="dark"
+                secureTextEntry
+                value={Password}
+                onChangeText={setPassword}
+              />
 
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.loginButtonText}>Login</Text>
-            </TouchableOpacity>
-            <View style={styles.signUpContainer}>
-              <Text style={styles.signUpText}>Don't you have an account?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate("UserData")}>
-                <Text style={styles.signUpLink}> Sign Up</Text>
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={handleLogin}
+              >
+                <Text style={styles.loginButtonText}>Login</Text>
               </TouchableOpacity>
-            </View>
+              <View style={styles.signUpContainer}>
+                <Text style={styles.signUpText}>
+                  Don't you have an account?
+                </Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("UserData")}
+                >
+                  <Text style={styles.signUpLink}> Sign Up</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.forgotPasswordContainer}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("ResetPassword")}
+                >
+                  <Text style={styles.forgetPasswordText}>¿Did you forget your password?</Text>
+                </TouchableOpacity>
+              </View>
 
-            <StatusBar style="light"></StatusBar>
-          </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-      <CustomAlert
-        message={alert.message}
-        type={alert.type}
-        visible={alert.visible}
-        onHide={hideAlert}
-      />
+              <StatusBar style="light"></StatusBar>
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+        <CustomAlert
+          message={alert.message}
+          type={alert.type}
+          visible={alert.visible}
+          onHide={hideAlert}
+        />
+      </SafeAreaView>
     </>
   );
 };
@@ -133,6 +162,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 24,
   },
+  forgotPasswordContainer: {
+    marginTop: 10
+  },
   signUpContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -140,6 +172,9 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     color: "#fff",
+  },
+  forgetPasswordText: {
+    color: "#597EAA"
   },
   signUpLink: {
     color: "#597EAA",

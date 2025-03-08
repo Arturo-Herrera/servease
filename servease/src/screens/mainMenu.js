@@ -1,10 +1,22 @@
 import React from "react";
-import { ScrollView, Text, StyleSheet, Pressable, View } from "react-native";
+import { ScrollView, Text, StyleSheet, Pressable, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { SmallLogo } from "../components/logo";
 
 const MainMenu = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <SmallLogo />
+        <View style={styles.profileContainer}>
+          <Pressable onPress={() => navigation.navigate("Profile")}>
+            <Image
+              source={require("../../assets/icon.png") }
+              style={styles.profilePhoto}
+            />
+          </Pressable>
+        </View>
+      </View>
       <View style={styles.navBar}>
         <Pressable
           style={({ pressed }) => [
@@ -36,8 +48,10 @@ const MainMenu = ({ navigation }) => {
         </Pressable>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollView}
-      showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.subBar}>
           <Text style={styles.recentPost}>Recent Post</Text>
           <Pressable
@@ -46,7 +60,7 @@ const MainMenu = ({ navigation }) => {
                 opacity: pressed ? 0.5 : 1,
               },
             ]}
-           >
+          >
             <Text style={styles.location}>Location</Text>
           </Pressable>
         </View>
@@ -54,7 +68,6 @@ const MainMenu = ({ navigation }) => {
         <Text style={{ color: "#fff" }}>
           Aqui ira el contenido de los posts
         </Text>
-
       </ScrollView>
     </SafeAreaView>
   );
@@ -65,6 +78,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#222831",
     paddingLeft: 30,
     paddingRight: 30,
+  },
+  header: {
+    width: "100%",
+    margin: 0,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  profilePhoto: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   recentPost: {
     color: "#fff",
