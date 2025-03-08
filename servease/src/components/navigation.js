@@ -16,7 +16,7 @@ const Navigation = () => {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="MyListings">
           <Stack.Screen
             options={{  
               headerShown: false,
