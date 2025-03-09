@@ -44,8 +44,11 @@ const MyListings = ({ navigation }) => {
       },
     });
 
-    if (!result.cancelled) {
-      setServicePhoto({ uri: result.uri });
+    if (!result.canceled && result.assets.length > 0) {
+      setServicePhoto({ uri: result.assets[0].uri });
+      console.log("Selected image:", result.assets[0].uri);
+    }else {
+      console.log("Canceled selection")
     }
   };
 

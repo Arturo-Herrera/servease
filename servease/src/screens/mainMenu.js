@@ -2,8 +2,10 @@ import React from "react";
 import { ScrollView, Text, StyleSheet, Pressable, View, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SmallLogo } from "../components/logo";
+import PostCard from "../components/postCard";
 
-const MainMenu = ({ navigation }) => {
+const MainMenu = ({ navigation, route }) => {
+  const { location } = route.params;
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -64,10 +66,22 @@ const MainMenu = ({ navigation }) => {
             <Text style={styles.location}>Location</Text>
           </Pressable>
         </View>
-
-        <Text style={{ color: "#fff" }}>
-          Aqui ira el contenido de los posts
-        </Text>
+        <View style={styles.postContainer}>
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+            <PostCard image={require('../../assets/Servease-Logo.jpg')} title={'Post title'} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -132,6 +146,13 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 16,
   },
+  postContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 10,
+    width: '100%'
+  }
 });
 
 export default MainMenu;

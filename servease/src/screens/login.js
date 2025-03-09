@@ -25,11 +25,11 @@ const LoginScreen = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
 
   const handleLocationObtained = (loc) => {
-    console.log("Ubicación en LoginScreen:", loc);
+    console.log("Location in login screen", loc);
     if (loc && loc.coords) {
       setUserLocation(loc);
     } else {
-      console.log("Error: Ubicación no válida recibida en LoginScreen");
+      console.log("Error: Not valid location");
     }
   };
   const handleLogin = () => {
@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
         });
 
         setTimeout(() => {
-          navigation.navigate("MainMenu");
+          navigation.navigate("MainMenu", {location: userLocation});
           console.log("User logged in: ", user);
           console.log(userLocation);
         }, 2000);

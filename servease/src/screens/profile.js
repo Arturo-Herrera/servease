@@ -34,8 +34,11 @@ const Profile = ({ navigation }) => {
       },
     });
 
-    if (!result.cancelled) {
-      setProfilePhoto({ uri: result.uri });
+    if (!result.canceled && result.assets.length > 0) {
+      setProfilePhoto({ uri: result.assets[0].uri });
+      console.log("Selected image:", result.assets[0].uri);
+    } else {
+      console.log("Canceled selection");
     }
   };
 
@@ -43,14 +46,7 @@ const Profile = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.inner}>
         <TouchableOpacity onPress={openImagePicker}>
-          <Image
-            source={
-              profilePhoto
-                ? profilePhoto
-                : require("../../assets/Servease-Logo.jpg")
-            }
-            style={styles.profilePhoto}
-          />
+          <Image source={profilePhoto} style={styles.profilePhoto} />
         </TouchableOpacity>
         <View style={styles.personInfo}>
           <Text style={styles.name}>Jesus</Text>

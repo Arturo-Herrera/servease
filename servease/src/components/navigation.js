@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/login";
@@ -9,6 +9,7 @@ import Categories from "../screens/categories";
 import MyListings from "../screens/myListings";
 import Profile from "../screens/profile";
 import ResetPassword from "../screens/resetPassword";
+import PostDetails from "../screens/postDetails";
 
 const Stack = createStackNavigator();
 
@@ -16,7 +17,7 @@ const Navigation = () => {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="MyListings">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             options={{  
               headerShown: false,
@@ -75,6 +76,13 @@ const Navigation = () => {
           <Stack.Screen 
             name="ResetPassword"
             component={ResetPassword}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="PostDetails"
+            component={PostDetails}
             options={{
               headerShown: false
             }}

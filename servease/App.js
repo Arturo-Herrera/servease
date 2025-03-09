@@ -4,10 +4,10 @@ import Navigation from "./src/components/navigation";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Navigation />
-      <StatusBar style="light" />
-    </View>
+      <View style={styles.container}>
+        <Navigation />
+        <StatusBar style="light" />
+      </View>
   );
 }
 
