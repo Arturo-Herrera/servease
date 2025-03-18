@@ -9,7 +9,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Image
+  Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CustomAlert from "../components/warning";
@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
         });
 
         setTimeout(() => {
-          navigation.navigate("MainMenu", {location: userLocation});
+          navigation.navigate("MainMenu", { location: userLocation });
           console.log("User logged In");
         }, 2000);
       })
@@ -105,6 +105,17 @@ const LoginScreen = ({ navigation }) => {
               >
                 <Text style={styles.loginButtonText}>Login</Text>
               </TouchableOpacity>
+
+              <TouchableOpacity style={styles.googleButton}>
+                <View style={styles.googleContainer}>
+                  <Image
+                    style={styles.googleLogo}
+                    source={require("../../assets/icons-google.png")}
+                  />
+                  <Text style={styles.googleText}>Log In with Google</Text>
+                </View>
+              </TouchableOpacity>
+
               <View style={styles.signUpContainer}>
                 <Text style={styles.signUpText}>
                   Don't you have an account?
@@ -119,13 +130,11 @@ const LoginScreen = ({ navigation }) => {
                 <TouchableOpacity
                   onPress={() => navigation.navigate("ResetPassword")}
                 >
-                  <Text style={styles.forgetPasswordText}>¿Did you forget your password?</Text>
+                  <Text style={styles.forgetPasswordText}>
+                    ¿Did you forget your password?
+                  </Text>
                 </TouchableOpacity>
               </View>
-
-              <TouchableOpacity style={styles.googleButton}>
-                <Image style={styles.googleLogo} source={require('../../assets/icon.png')}/>
-              </TouchableOpacity>
 
               <StatusBar style="light"></StatusBar>
             </View>
@@ -154,15 +163,24 @@ const styles = StyleSheet.create({
     fontFamily: "merriweather",
   },
   googleButton: {
-    width: 100,
+    width: 200,
     height: 50,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 30,
-    padding: 10
+    paddingLeft: 20,
+    justifyContent: "center",
+    marginTop: 20
   },
   googleLogo: {
     width: 20,
-    height: 20
+    height: 20,
+    marginRight: 12,
+  },
+  googleContainer: {
+    flexDirection: "row",
+  },
+  googleText: {
+    fontWeight: 600,
   },
   input: {
     width: 283,
@@ -178,7 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   forgotPasswordContainer: {
-    marginTop: 10
+    marginTop: 10,
   },
   signUpContainer: {
     flexDirection: "row",
@@ -189,7 +207,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   forgetPasswordText: {
-    color: "#597EAA"
+    color: "#597EAA",
   },
   signUpLink: {
     color: "#597EAA",
