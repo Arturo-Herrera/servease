@@ -10,6 +10,8 @@ import MyListings from "../screens/myListings";
 import Profile from "../screens/profile";
 import ResetPassword from "../screens/resetPassword";
 import PostDetails from "../screens/postDetails";
+import MessagesScreen from "../screens/messages";
+import Chat from "../screens/chat";
 
 const Stack = createStackNavigator();
 
@@ -83,6 +85,22 @@ const Navigation = () => {
           <Stack.Screen 
             name="PostDetails"
             component={PostDetails}
+            options={{
+              headerShown: false
+            }}
+          />
+
+          <Stack.Screen 
+            name="Messages"
+            component={MessagesScreen}
+            options={{
+              headerShown: false
+            }}
+          />
+
+          <Stack.Screen 
+            name="Chat"
+            component={Chat}
             options={{
               headerShown: false
             }}

@@ -36,6 +36,7 @@ const MainMenu = ({ navigation, route }) => {
               opacity: pressed ? 0.5 : 1,
             },
           ]}
+          onPress={() => navigation.navigate('Messages')}
         >
           <Text style={styles.nav}>Messages</Text>
         </Pressable>

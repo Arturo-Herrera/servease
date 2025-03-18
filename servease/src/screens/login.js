@@ -9,6 +9,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Image
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CustomAlert from "../components/warning";
@@ -25,7 +26,7 @@ const LoginScreen = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
 
   const handleLocationObtained = (loc) => {
-    console.log("Location in login screen", loc);
+    console.log("Location in login screen");
     if (loc && loc.coords) {
       setUserLocation(loc);
     } else {
@@ -46,8 +47,7 @@ const LoginScreen = ({ navigation }) => {
 
         setTimeout(() => {
           navigation.navigate("MainMenu", {location: userLocation});
-          console.log("User logged in: ", user);
-          console.log(userLocation);
+          console.log("User logged In");
         }, 2000);
       })
 
@@ -83,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
               <Text style={styles.title}>Login</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Username"
+                placeholder="Email"
                 placeholderTextColor="rgba(255, 255, 255, 0.3)"
                 keyboardAppearance="dark"
                 value={Username}
@@ -123,6 +123,10 @@ const LoginScreen = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
 
+              <TouchableOpacity style={styles.googleButton}>
+                <Image style={styles.googleLogo} source={require('../../assets/icon.png')}/>
+              </TouchableOpacity>
+
               <StatusBar style="light"></StatusBar>
             </View>
           </TouchableWithoutFeedback>
@@ -148,6 +152,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "merriweather",
+  },
+  googleButton: {
+    width: 100,
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    padding: 10
+  },
+  googleLogo: {
+    width: 20,
+    height: 20
   },
   input: {
     width: 283,

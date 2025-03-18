@@ -6,8 +6,9 @@ const firebaseConfig = {
   authDomain: "servease-32bd1.firebaseapp.com",
   projectId: "servease-32bd1",
   storageBucket: "servease-32bd1.firebasestorage.app",
-  messagingSenderId: "455169858252",  
-  appId: "1:455169858252:web:243d2307ec49e598198069"
+  messagingSenderId: "455169858252",
+  appId: "1:455169858252:web:bceb7349c4481687198069",
+  measurementId: "G-3G8ZWRDQJR"
 };
 
 const app = initializeApp(firebaseConfig);
