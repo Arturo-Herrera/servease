@@ -1,3 +1,4 @@
+-- SQLBook: Code
 --Estoy mirando como funciona ENUM para evitar crear otras tablas
 --O prefieren que creemos otras tablas?
 
@@ -11,7 +12,6 @@ firebase_uid VARCHAR(255) NOT NULL UNIQUE,   --Firebase Authentication
 nombre VARCHAR(100) NOT NULL,
 apellido VARCHAR(100) NOT NULL,
 email VARCHAR(255) UNIQUE NOT NULL,
-telefono VARCHAR(20),
 rol ENUM('cliente', 'proveedor') NOT NULL,
 foto_perfil VARCHAR(512),
 rating_promedio DECIMAL(3,2) DEFAULT 0.00,

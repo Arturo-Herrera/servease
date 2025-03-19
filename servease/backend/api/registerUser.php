@@ -14,6 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (isset($data['firebase_uid'], $data['nombre'], $data['email'], $data['telefono'], $data['tipo'])) {
+    //!QUITAR TELEFONO
+    //?AGREGAR APELLIDO
+    
+    $con = connectdb();
+
     $firebase_id = $data['firebase_uid'];
     $name = $data['nombre'];
     $email = $data['email'];
