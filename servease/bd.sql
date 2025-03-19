@@ -1,11 +1,15 @@
 --Estoy mirando como funciona ENUM para evitar crear otras tablas
 --O prefieren que creemos otras tablas?
 
+create DATABASE servease
+
+USE servease;
 
 CREATE TABLE usuarios (
 id INT PRIMARY KEY AUTO_INCREMENT,
 firebase_uid VARCHAR(255) NOT NULL UNIQUE,   --Firebase Authentication
 nombre VARCHAR(100) NOT NULL,
+apellido VARCHAR(100) NOT NULL,
 email VARCHAR(255) UNIQUE NOT NULL,
 telefono VARCHAR(20),
 rol ENUM('cliente', 'proveedor') NOT NULL,
