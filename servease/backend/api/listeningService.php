@@ -1,6 +1,9 @@
 <?php
 //Vamos a utilizar variables de status activo?
 //O como haremos estos
+include_once '../connection.php';
+Include_once '../cors.php';
+
 $cliente_id = 1; 
 
 $query = "Select * from vw_listeningServices where cliente_id = ?";
