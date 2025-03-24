@@ -30,7 +30,6 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 titulo VARCHAR(255) NOT NULL,
 descripcion TEXT,
 ubicacion GEOMETRY SRID 4326 NOT NULL,   --latitud y longitud
-/* estado ENUM('abierta', 'en_proceso', 'completada', 'cancelada') DEFAULT 'abierta', */
 fecha_limite DATE,
 cliente_id INT NOT NULL,
 categoria_id INT NOT NULL,
