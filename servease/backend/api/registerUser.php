@@ -1,11 +1,8 @@
 <?php
 include_once '../connection.php';
+Include_once '../cors.php';
 
-//Estos headers se usan para evitar problemas de CORS que es algo asi como para especificar el tipo de contenido que se envia(ahi busquenlo bien jaja)
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Content-Type: application/json; charset=UTF-8");
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit(0);
@@ -13,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (isset($data['firebase_uid'], $data['nombre'], $data['email'], $data['telefono'], $data['tipo'])) {
+if (isset($data['firebase_uid'], $data['nombre'],$data['apellido'] ,$data['email'], $data['telefono'], $data['tipo'])) {
     //!QUITAR TELEFONO
     //?AGREGAR APELLIDO
     
@@ -21,12 +18,12 @@ if (isset($data['firebase_uid'], $data['nombre'], $data['email'], $data['telefon
 
     $firebase_id = $data['firebase_uid'];
     $name = $data['nombre'];
+    $surname = $data['apellido'];
     $email = $data['email'];
-    $phone = $data['telefono'];
     $userType = $data['tipo'];
 
     // Preparamos la consulta para evitar inyecciones SQL
-    $query = $con->prepare("INSERT INTO usuarios (firebase_uid, nombre, email, telefono, rol) VALUES (?, ?, ?, ?, ?)");
+    $query = $con->prepare("INSERT INTO usuarios (firebase_uid, nombre,apellido ,email, telefono, rol) VALUES (?, ?, ?, ?, ?)");
     $query->bind_param("sssss", $firebase_id, $name, $email, $phone, $userType);
 
     $response = [];
