@@ -5,11 +5,14 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SmallLogo } from "../components/logo";
 import { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
+import ListingsCard from "../components/listingsPostCard";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const MyListings = ({ navigation }) => {
   const [selectedScreen, setSelectedScreen] = useState("MyListings");
@@ -47,8 +50,8 @@ const MyListings = ({ navigation }) => {
     if (!result.canceled && result.assets.length > 0) {
       setServicePhoto({ uri: result.assets[0].uri });
       console.log("Selected image:", result.assets[0].uri);
-    }else {
-      console.log("Canceled selection")
+    } else {
+      console.log("Canceled selection");
     }
   };
 
@@ -65,10 +68,7 @@ const MyListings = ({ navigation }) => {
             <View style={styles.infoContainer}>
               <View style={styles.imageContainer}>
                 <TouchableOpacity onPress={openImagePicker}>
-                  <Image
-                    source={ servicePhoto }
-                    style={styles.image}
-                  />
+                  <Image source={servicePhoto} style={styles.image} />
                 </TouchableOpacity>
               </View>
               <View style={styles.inputContainer}>
@@ -95,14 +95,6 @@ const MyListings = ({ navigation }) => {
                   keyboardAppearance="dark"
                   value={categorie}
                   onChangeText={setCategorie}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder=""
-                  placeholderTextColor="rgba(255, 255, 255, 0.38)"
-                  keyboardAppearance="dark"
-                  //   value={}
-                  //   onChangeText={}
                 />
               </View>
             </View>
@@ -133,7 +125,38 @@ const MyListings = ({ navigation }) => {
         );
       case "MyListings":
         return (
-          <Text style={styles.contentText}>My Listings Screen Content</Text>
+          <View style={{flex: 1}}>
+            <ScrollView>
+              <Text style={styles.recent}>Recent</Text>
+              <View style={styles.content}>
+                <ListingsCard
+                  image={require("../../assets/Servease-Logo.jpg")}
+                  title="Title"
+                  price="$7000"
+                  description="Here it'll be the post description"
+                />
+                <ListingsCard
+                  image={require("../../assets/Servease-Logo.jpg")}
+                  title="Title"
+                  price="$7000"
+                  description="Here it'll be the post description"
+                />
+                <ListingsCard
+                  image={require("../../assets/Servease-Logo.jpg")}
+                  title="Title"
+                  price="$7000"
+                  description="Here it'll be the post description"
+                />
+
+              </View>
+            </ScrollView>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Messages")}
+                style={styles.chatButton}
+              > 
+                <Icon name="chatbubble-ellipses" size={30} color="rgba(255, 2555, 255, 0.4)" />
+              </TouchableOpacity>
+          </View>
         );
       case "Notifications":
         return (
@@ -255,9 +278,10 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "rgba(145, 174, 200, 0.2)",
     width: 141,
-    height: 27,
+    height: 40,
     borderRadius: 10,
     paddingLeft: 15,
+    justifyContent: "center",
   },
   downPart: {
     marginTop: 10,
@@ -283,6 +307,27 @@ const styles = StyleSheet.create({
   postText: {
     fontSize: 20,
     color: "#fff",
+  },
+  content: {
+    gap: 20,
+  },
+  recent: {
+    fontSize: 15,
+    color: "#fff",
+    fontWeight: "bold",
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+  chatButton: {
+    backgroundColor: "#597EAA",
+    borderRadius: 30,
+    width: 50,
+    height: 50,
+    position: "absolute",
+    right: 10,
+    bottom: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 export default MyListings;

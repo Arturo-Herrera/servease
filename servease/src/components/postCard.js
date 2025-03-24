@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
 const PostCard = ({ image, post, title }) => {
     const navigation = useNavigation();

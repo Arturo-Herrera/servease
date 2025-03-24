@@ -9,11 +9,11 @@ import {
   Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { MapView, Marker } from "react-native-maps";
+import Navigation from "../components/navigation";
+import MapView from "react-native-maps";
 
-const PostDetails = ({ route }) => {
+const ClientPostView = ({ navigation }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { location } = route.params;
 
   const overlayHeight = useRef(new Animated.Value(110)).current;
 
@@ -42,26 +42,9 @@ const PostDetails = ({ route }) => {
     },
   });
 
-
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: location.latitude,
-          longitude: location.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      >
-        <Marker
-          coordinate={{
-            latitude: location.latitude,
-            longitude: location.longitude,
-          }}
-          title="You are here"
-        />
-      </MapView>
+
       <Animated.View
         {...panResponder.panHandlers}
         style={[styles.overlay, { height: overlayHeight }]}
@@ -79,8 +62,10 @@ const PostDetails = ({ route }) => {
           </Text>
           <Text style={styles.price}>$7,000</Text>
 
-          <TouchableOpacity style={styles.offerButton}>
-            <Text style={styles.offerButtonText}>Offer</Text>
+          <TouchableOpacity 
+          onPress={() => Navigation.naviga}
+          style={styles.offerButton}>
+            <Text style={styles.offerButtonText}>View Offers</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.servicePhotoContainer}>
@@ -180,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostDetails;
+export default ClientPostView;

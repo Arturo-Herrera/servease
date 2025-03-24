@@ -14,8 +14,8 @@ import {
 import { StatusBar } from "expo-status-bar";
 import CustomAlert from "../components/warning";
 import { BigLogo } from "../components/logo";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/FBconfig";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../config/FBconfig";
 import LocationPermission from "../components/getLocation";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -33,6 +33,17 @@ const LoginScreen = ({ navigation }) => {
       console.log("Error: Not valid location");
     }
   };
+
+  const handleSignInWithGoogle = ()=> {
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+      console.log("Usuario autenticado como: ", user);
+    })
+    .catch((error) =>{
+      console.log("Error")
+    })
+  }
   const handleLogin = () => {
     Keyboard.dismiss();
 
@@ -106,7 +117,7 @@ const LoginScreen = ({ navigation }) => {
                 <Text style={styles.loginButtonText}>Login</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.googleButton}>
+              <TouchableOpacity onPress={handleSignInWithGoogle} style={styles.googleButton}>
                 <View style={styles.googleContainer}>
                   <Image
                     style={styles.googleLogo}

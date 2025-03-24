@@ -12,6 +12,7 @@ import ResetPassword from "../screens/resetPassword";
 import PostDetails from "../screens/postDetails";
 import MessagesScreen from "../screens/messages";
 import Chat from "../screens/chat";
+import ClientPostView from "../screens/clientPostView";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ const Navigation = () => {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="MyListings">
           <Stack.Screen
             options={{  
               headerShown: false,
@@ -101,6 +102,14 @@ const Navigation = () => {
           <Stack.Screen 
             name="Chat"
             component={Chat}
+            options={{
+              headerShown: false
+            }}
+          />
+
+          <Stack.Screen 
+            name="ClientPostView"
+            component={ClientPostView}
             options={{
               headerShown: false
             }}
